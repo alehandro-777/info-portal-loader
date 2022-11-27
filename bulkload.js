@@ -9,6 +9,7 @@ const repository =require('./oraRepository');
 
 const op_data_config= require('./json/op_data_sync.json');
 const psg_states_config= require('./json/psg-states.json');
+const temperatures_config= require('./json/temperature.json');
 
 const argv = require('minimist')(process.argv.slice(2));
 
@@ -61,6 +62,44 @@ async function loadLoop(connection, from, to, config) {
       }  
 }
 
+async function loadTemperLoop(connection, from, to, config) {
+  for (let i = 0; i < config.length; i++) {
+      try {
+          const el = config[i];
+          let values = await repository.selectTemperaturesBetween(connection, +el.object, from, to);
+          let res = await Value.insertMany(values);
+          console.log(res);           
+      } catch (error) {
+          console.log(error);
+      }
+
+    }  
+}
+async function bulkInsertTemperatures(from, to, config) {
+  let connection;
+
+  try {
+
+    connection = await getConnectionPromise();
+
+    await loadTemperLoop(connection, from, to, config);
+
+    process.exit(0);
+  } 
+  catch (err) {
+    console.error(err);
+    process.exit(1);
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }    
+}
+
 async function bulkInsertFrom_psg_states(from, to, config) {
   let connection;
 
@@ -111,6 +150,6 @@ async function bulkInsertFrom_psg_states(from, to, config) {
     }
 
 
-
+    bulkInsertTemperatures(from, to, temperatures_config)
     bulkInsertFrom_op_data(from, to, op_data_config);
     bulkInsertFrom_psg_states(from, to, psg_states_config)

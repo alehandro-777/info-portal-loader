@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <locations>
+      <location id="1" name="Вінницька" lat="49.23278" lon="28.48097" accu="326175"/>
+      <location id="2" name="Волинська" lat="50.75932" lon="25.34244" accu="326220"/>
+      <location id="3" name="Дніпропетровська" lat="48.45" lon="34.98333" accu="1213912"/>
+      <location id="4" name="Донецька" lat="48.023" lon="37.80224" accu="323030"/>
+      <location id="5" name="Житомирська" lat="50.26487" lon="28.67669" accu="326310"/>
+      <location id="6" name="Закарпатська" lat="48.61667" lon="22.3" accu="326175"/>
+      <location id="7" name="Запорізька" lat="47.82289" lon="35.19031" accu="326331"/>
+      <location id="8" name="Івано-Франківська" lat="48.9215" lon="24.70972" accu="323684"/>
+      <location id="9" name="Київська" lat="50.45466" lon="30.5238" accu="324505"/>
+      <location id="10" name="Кіровоградська" lat="48.5132" lon="32.2597" accu="324291"/>
+      <location id="11" name="Луганська" lat="48.56705" lon="39.31706" accu="324763"/>
+      <location id="12" name="Львівська" lat="49.83826" lon="24.02324" accu="324561"/>
+      <location id="13" name="Миколаївська" lat="46.96591" lon="31.9974" accu="324986"/>
+      <location id="14" name="Одеська" lat="46.47747" lon="30.73262" accu="325343"/>
+      <location id="15" name="Полтавська" lat="49.59373" lon="34.54073" accu="325523"/>
+      <location id="16" name="Рівненська" lat="50.62308" lon="26.22743" accu="325590"/>
+      <location id="17" name="Сумська" lat="50.9216" lon="34.80029" accu="325825"/>
+      <location id="18" name="Тернопільська" lat="49.55589" lon="25.60556" accu="325936"/>
+      <location id="19" name="Харківська" lat="49.98081" lon="36.25272" accu="323903"/>
+      <location id="20" name="Херсонська" lat="46.65581" lon="32.6178" accu="324056"/>
+      <location id="21" name="Хмельницька" lat="49.42161" lon="26.99653" accu="324159"/>
+      <location id="22" name="Черкаська" lat="49.42854" lon="32.06207" accu="321985"/>
+      <location id="23" name="Чернівецька" lat="48.29149" lon="25.94034" accu="322253"/>
+      <location id="24" name="Чернігівська" lat="51.50551" lon="31.28487" accu="322162"/>     
+    </locations>
+</root>

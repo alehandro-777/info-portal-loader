@@ -9,6 +9,7 @@ const repository =require('./oraRepository');
 
 const op_data_config= require('./json/op_data_sync.json');
 const psg_states_config= require('./json/psg-states.json');
+const temperatures_config= require('./json/temperature.json');
 
 const argv = require('minimist')(process.argv.slice(2));
 
@@ -25,6 +26,7 @@ function getConnectionPromise() {
 //step = -1 day, 
 async function getValueCallsLoop(endIsoDay, dayCount, config) {
   let connection;
+  console.log("Starting getValueCallsLoop -> ", from, to);
   try {
     connection = await getConnectionPromise();
 
@@ -104,6 +106,7 @@ async function upsertValuesArray(values) {
 
 async function InsertFrom_psg_states(from, to, config) {
   let connection;
+  console.log("Starting InsertFrom_psg_states -> ", from, to);
 
   try {
 
@@ -131,6 +134,36 @@ async function InsertFrom_psg_states(from, to, config) {
   }    
 }
 
+async function InsertFromTemperatures(from, to, config) {
+  let connection;
+  console.log("Starting InsertFromTemperatures -> ", from, to);
+  try {
+
+    connection = await getConnectionPromise();
+
+    for (let i = 0; i < config.length; i++) {
+      const el = config[i];
+      let values = await repository.selectTemperaturesBetween(connection, +el.object, from, to);
+      await upsertValuesArray(values)
+    }  
+    
+    process.exit(0);
+  } 
+  catch (err) {
+    console.error(err);
+    process.exit(1);
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }    
+}
+
+
 //------------------------------------------------------------------
 let timer;
 let timeout = +process.env.TIMER_MS;
@@ -149,25 +182,25 @@ async function timerCallback() {
   let to;
 
   if (!argv.from) {
-      from = new SmartDate().nextGasDay().addDay(-dayCounter);
-      console.error("--from no param-> set to " + from.dt.toISOString());
+      from = new SmartDate().currGasDay().addDay(-dayCounter);
   } else {
       from = new SmartDate(argv.from);
   }
 
   if (!argv.to) {
     to = new SmartDate().currGasDay();
-    console.error("--to no param-> set to "+ to.dt.toISOString());
   } else {
     to = new SmartDate(argv.to);
   } 
 
+  let forecastDayCount = new SmartDate().currGasDay().addDay(7);
 
-
+  await InsertFromTemperatures(to.dt, forecastDayCount.dt, temperatures_config);
   await getValueCallsLoop(to.dt, dayCounter, op_data_config);
   await InsertFrom_psg_states(from.dt, to.dt, psg_states_config);
 }
 
+timerCallback();
 schedule();
-//bulkInsertFrom_psg_states();
+
 

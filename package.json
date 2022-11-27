@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "simpsgst":"node tests/simpsgst --to=2023-01-01 --periods=10",
-    "simopdata": "node tests/simopdata --to=2023-01-01 --days=366 --value=432432.123"
+    "simopdata": "node tests/simopdata --to=2023-01-01 --days=366 --value=432432.123",
+    "simtemp": "node tests/simtemp --to=2023-01-01 --days=366 --value=12.12"
   },
   "author": "Rekalo OLeksandr",
   "license": "ISC",
