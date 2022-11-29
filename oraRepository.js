@@ -139,11 +139,11 @@ module.exports.selectTemperaturesBetween = async (connection, object, fromDate, 
     
   let values = [];
   result.rows.forEach(r => {
-    let v1 = {"object": object, "parameter":1, "value": r.t_min, "time_stamp": r.DDATE};
+    let v1 = {"object": object, "parameter":1, "value": r.T_MIN, "time_stamp": r.DDATE};
     values.push(v1);
-    let v2 = {"object": object, "parameter":2, "value": r.t_max, "time_stamp": r.DDATE};
+    let v2 = {"object": object, "parameter":2, "value": r.T_MAX, "time_stamp": r.DDATE};
     values.push(v2);
-    let v3 = {"object": object, "parameter":3, "value": r.t_avg, "time_stamp": r.DDATE};
+    let v3 = {"object": object, "parameter":3, "value": r.T_AVG, "time_stamp": r.DDATE};
     values.push(v3);
   });
   return values;  

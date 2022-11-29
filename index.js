@@ -1,7 +1,7 @@
 require('dotenv').config();
 const oracledb = require('oracledb');
 require('./db')  //init mongoose
-//oracledb.initOracleClient({libDir: process.env.ORA_INSTANT_DIR});
+oracledb.initOracleClient({libDir: process.env.ORA_INSTANT_DIR});
 const Value =require('./models/value');
 const SmartDate =require('./smartdate');
 const repository =require('./oraRepository');
@@ -26,13 +26,13 @@ function getConnectionPromise() {
 //step = -1 day, 
 async function getValueCallsLoop(endIsoDay, dayCount, config) {
   let connection;
-  console.log("Starting getValueCallsLoop -> ", from, to);
+  console.log("Starting getValueCallsLoop -> ", endIsoDay, dayCount);
   try {
     connection = await getConnectionPromise();
 
     await callsLoop(connection, endIsoDay, dayCount, config);
 
-    process.exit(0);
+    //process.exit(0);
   } 
   catch (err) {
     console.error(err);
@@ -118,7 +118,7 @@ async function InsertFrom_psg_states(from, to, config) {
       await upsertValuesArray(values)
     }  
     
-    process.exit(0);
+    //process.exit(0);
   } 
   catch (err) {
     console.error(err);
@@ -143,11 +143,11 @@ async function InsertFromTemperatures(from, to, config) {
 
     for (let i = 0; i < config.length; i++) {
       const el = config[i];
-      let values = await repository.selectTemperaturesBetween(connection, +el.object, from, to);
+      let values = await repository.selectTemperaturesBetween(connection, +el.location_id, from, to);
       await upsertValuesArray(values)
     }  
     
-    process.exit(0);
+    //process.exit(0);
   } 
   catch (err) {
     console.error(err);
@@ -201,6 +201,6 @@ async function timerCallback() {
 }
 
 timerCallback();
-schedule();
+//schedule();
 
 
