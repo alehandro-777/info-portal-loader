@@ -56,11 +56,14 @@ async function callsLoop(connection, end, dayCount, config) {
 
       for (let j = 0; j < dayCount; j++) {
         let from = new SmartDate(end).currGasDay().addDay(-1*j).dt; 
-  
+
+        console.log( +el.object, +el.parameter, from);
         let value = await repository.execGetValueProc(connection, +el.object, +el.parameter, from);
-        //let res = await Value.create(value);   
+        //let res = await Value.create(value);
+        console.log(value);
+        if (!value)   continue; //skip if no value
         let res =  await upsertValue(value);  //
-        console.log(res);         
+        //console.log(res);         
       }     
 
     } catch (error) {
