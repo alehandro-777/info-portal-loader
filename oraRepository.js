@@ -65,11 +65,19 @@ const oracledb = require('oracledb');
       return values;  
   }
 
-  module.exports.execGetValueProc = async (connection, object, parameter, fromDate) => {
+  module.exports.execGetValueProc = async (connection, object, parameter, fromDateISO) => {
     let value;
-    
-    let fromDateISO = fromDate.toISOString().slice(0, 10);
-    let from = `TO_DATE('${fromDateISO}','YYYY-MM-DD')`;
+    let ts = "";
+    let from ="";
+
+    if (fromDateISO.length == 10) {
+      ts = fromDateISO + "T07:00:00"; //shift to contract hour ISO format
+      from = `TO_DATE('${fromDateISO}','YYYY-MM-DD"T"HH24:MI:SS"Z"')`;
+    } else {
+      ts = fromDateISO.substring(0,19) + "Z"; //remove msec part
+      from = `TO_DATE('${ts}','YYYY-MM-DD"T"HH24:MI:SS"Z"')`;
+    } 
+
 
     binds = {};
 
@@ -95,7 +103,7 @@ const oracledb = require('oracledb');
 
             let val = v.replace(",", ".");  // ???
 
-            value = {"object": object, "parameter":parameter, "value": val, "time_stamp": fromDate};
+            value = {"object": object, "parameter":parameter, "value": val, "time_stamp": ts};
             //console.log(data); 
           }
 

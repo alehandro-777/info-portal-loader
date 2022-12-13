@@ -3,7 +3,7 @@ require('../db')  //init mongoose
 const Value =require('../models/value');
 const SmartDate =require('../smartdate');
 
-const temperature_config= require('../json/temperature.json');
+const op_data_config= require('../json/op_data_sync_hh.json');
 
 const argv = require('minimist')(process.argv.slice(2));
 
@@ -14,14 +14,13 @@ async function callsLoop(end, dayCount, config, val, user) {
         const el = config[i];
   
         for (let j = 0; j < dayCount; j++) {
-          let from = new SmartDate(end).addDay(-1*j).dt; 
+          let from = new SmartDate(end).currGasDay().addHours(-1*j).dt; 
           //simulate  
-          let value = {"object": +el.location_id, "parameter":1, "value": val-5.6, "time_stamp": from, "user" : user};   
+          let value = {"object": +el.object, "parameter":+el.parameter, "value": val, "time_stamp": from, "user" : user};
+          //let res = await Value.create(value);
+          //console.log(value);    
           let res =  await upsertValue(value);  //
-          value = {"object": +el.location_id, "parameter":2, "value": val, "time_stamp": from, "user" : user};   
-          res =  await upsertValue(value);  //
-          value = {"object": +el.location_id, "parameter":3, "value": val/2, "time_stamp": from, "user" : user};   
-          res =  await upsertValue(value);  //          //console.log(res);         
+          //console.log(res);         
         }     
   
       } catch (error) {
@@ -85,7 +84,7 @@ if (!argv.value) {
 let user = +process.env.USER_ID
 
 let timer = setTimeout(async () => {
-  await callsLoop(argv.to, days, temperature_config, argv.value, user); 
+  await callsLoop(argv.to, days, op_data_config, argv.value, user); 
   process.exit(0);
 }, 2000);
 
