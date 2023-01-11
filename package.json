@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "simpsgst": "node tests/simpsgst --to=2023-01-01 --periods=10",
-    "simopdata": "node tests/simopdata --to=2023-01-01 --days=366 --value=432432.123",
-    "simopdatahh": "node tests/simopdataHH --to=2023-01-01 --days=1000 --value=1000.01",
-    "simtemp": "node tests/simtemp --to=2023-01-01T00:00:00 --days=366 --value=12.12"
+    "simpsgst": "node tests/simpsgst --to=2024-01-01 --periods=10",
+    "simopdata": "node tests/simopdata --to=2024-01-01 --days=366 --value=432432.123",
+    "simopdatahh": "node tests/simopdataHH --to=2024-01-01 --days=1000 --value=1000.01",
+    "simtemp": "node tests/simtemp --to=2024-01-01T00:00:00 --days=366 --value=12.12"
   },
   "author": "Rekalo OLeksandr",
   "license": "ISC",

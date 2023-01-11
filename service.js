@@ -41,12 +41,9 @@ function upsertDaysFromHours(config, hourData) {
 // from 7:00 - 10:00 do update last day withdraw/ injection from hour data
 exports.updateDaysFromHours = async () => {
     let now = new Date();
-    let hh = now.getHours()
-    if ( hh > 7  && hh < 10) {
-        let config = require('./json/op_data_sync_hh.json');
-        let data = await sum_withdraw_injection(now);
-        upsertDaysFromHours(config, data);
-    }
+    let config = require('./json/op_data_sync_hh.json');
+    let data = await sum_withdraw_injection(now);
+    upsertDaysFromHours(config, data);
 }
 
 async function upsertValue(new_value) {  

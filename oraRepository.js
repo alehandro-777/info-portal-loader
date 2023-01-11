@@ -141,17 +141,23 @@ module.exports.selectTemperaturesBetween = async (connection, object, fromDate, 
     // fetchArraySize:   100                 // internal buffer allocation size for tuning
   };
 
-  let result = await connection.execute(sql_cmd, binds, options);
+   let result = await connection.execute(sql_cmd, binds, options);
 
   //console.dir(result.rows, { depth: null }); 
     
   let values = [];
   result.rows.forEach(r => {
-    let v1 = {"object": object, "parameter":1, "value": r.T_MIN, "time_stamp": r.DDATE};
+    let yyyy = r.DDATE.getFullYear();
+    let mm = r.DDATE.getMonth();
+    let dd = r.DDATE.getDate();
+
+    let dt = new Date(yyyy, mm, dd);
+
+    let v1 = {"object": object, "parameter":1, "value": r.T_MIN, "time_stamp": dt};
     values.push(v1);
-    let v2 = {"object": object, "parameter":2, "value": r.T_MAX, "time_stamp": r.DDATE};
+    let v2 = {"object": object, "parameter":2, "value": r.T_MAX, "time_stamp": dt};
     values.push(v2);
-    let v3 = {"object": object, "parameter":3, "value": r.T_AVG, "time_stamp": r.DDATE};
+    let v3 = {"object": object, "parameter":3, "value": r.T_AVG, "time_stamp": dt};
     values.push(v3);
   });
   return values;  

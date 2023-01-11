@@ -238,28 +238,28 @@ async function InsertFromTemperatures(config) {
 
 
 //------------------------------------------------------------------
-const job1 = schedule.scheduleJob(rule1, function() {
-  console.log(new Date().toISOString(), 'rule 1');
+const job1 = schedule.scheduleJob(rule1, ()=> {
+  console.log(new Date().toISOString(), 'job 1');
   //service.updateDaysFromHours();
 });
 
-const job2 = schedule.scheduleJob(rule2, function() {
-  console.log(new Date().toISOString(), 'rule 2');
+const job2 = schedule.scheduleJob(rule2, ()=> {
+  console.log(new Date().toISOString(), 'job 2');
   //getValueHHCallsLoop(hh_config);
 });
 
-const job3 = schedule.scheduleJob(rule3, function() {
-  console.log(new Date().toISOString(), 'rule 3');
+const job3 = schedule.scheduleJob(rule3, ()=> {
+  console.log(new Date().toISOString(), 'job 3');
   //InsertFromTemperatures(temperatures_config);
 });
 
-const job4 = schedule.scheduleJob(rule4, function() {
-  console.log(new Date().toISOString(), 'rule 4');
+const job4 = schedule.scheduleJob(rule4, ()=> {
+  console.log(new Date().toISOString(), 'job 4');
   //getValueCallsLoop(op_data_config);
 });
 
-const job5 = schedule.scheduleJob(rule5, function() {
-  console.log(new Date().toISOString(), 'rule 5');
+const job5 = schedule.scheduleJob(rule5, ()=> {
+  console.log(new Date().toISOString(), 'job 5');
   //InsertFrom_psg_states(psg_states_config);
 });
 
